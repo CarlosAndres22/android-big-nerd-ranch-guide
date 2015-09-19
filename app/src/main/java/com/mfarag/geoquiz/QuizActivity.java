@@ -1,7 +1,7 @@
 package com.mfarag.geoquiz;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,27 +10,37 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
-    private Question mQuestion;
     private TextView mQuestionTextView;
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
+    private Question[] mQuestionBank = new Question[]{
+            new Question(R.string.question_toronto_population, true),
+            new Question(R.string.question_toronto_capital, false),
+            new Question(R.string.question_toronto_language, true)
+    };
+    private int mCurrentQuestion;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        mQuestion = new Question(R.string.question_toronto_population,true);
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
-        mQuestionTextView.setText(mQuestion.getTextResourceId());
+        mCurrentQuestion = 0;
+        mQuestionTextView.setText(mQuestionBank[mCurrentQuestion].getTextResourceId());
 
         mTrueButton = (Button) findViewById(R.id.button_true);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), R.string.feedback_correct, Toast.LENGTH_SHORT).show();
+                if(mQuestionBank[mCurrentQuestion].isAnswerTrue()){
+                    Toast.makeText(getApplicationContext(), R.string.feedback_correct, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(QuizActivity.this, R.string.feedback_wrong, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -39,15 +49,23 @@ public class QuizActivity extends AppCompatActivity {
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(QuizActivity.this, R.string.feedback_wrong, Toast.LENGTH_SHORT).show();
-            }
+                if(mQuestionBank[mCurrentQuestion].isAnswerTrue()){
+                    Toast.makeText(QuizActivity.this, R.string.feedback_wrong, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.feedback_correct, Toast.LENGTH_SHORT).show();
+                }            }
         });
 
         mNextButton = (Button) findViewById(R.id.button_next);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(QuizActivity.this, R.string.feedback_no_more_questions_message, Toast.LENGTH_SHORT).show();
+                if(mCurrentQuestion >= mQuestionBank.length -1){
+                    Toast.makeText(QuizActivity.this, R.string.feedback_no_more_questions_message, Toast.LENGTH_SHORT).show();
+                } else {
+                    mCurrentQuestion += 1;
+                    mQuestionTextView.setText(mQuestionBank[mCurrentQuestion].getTextResourceId());
+                }
             }
         });
     }
