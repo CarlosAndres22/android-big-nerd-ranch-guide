@@ -6,9 +6,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
+    private Question mQuestion;
+    private TextView mQuestionTextView;
     private Button mTrueButton;
     private Button mFalseButton;
 
@@ -16,6 +19,12 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        mQuestion = new Question(R.string.toronto_population_question,true);
+
+        mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+        mQuestionTextView.setText(mQuestion.getTextResourceId());
+
         mTrueButton = (Button) findViewById(R.id.button_true);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
