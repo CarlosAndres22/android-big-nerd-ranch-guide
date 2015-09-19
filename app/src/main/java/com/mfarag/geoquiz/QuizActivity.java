@@ -30,17 +30,13 @@ public class QuizActivity extends AppCompatActivity {
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         mCurrentQuestion = 0;
-        mQuestionTextView.setText(mQuestionBank[mCurrentQuestion].getTextResourceId());
+        updateQuestionText();
 
         mTrueButton = (Button) findViewById(R.id.button_true);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mQuestionBank[mCurrentQuestion].isAnswerTrue()){
-                    Toast.makeText(getApplicationContext(), R.string.feedback_correct, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(QuizActivity.this, R.string.feedback_wrong, Toast.LENGTH_SHORT).show();
-                }
+                displayFeedbackInResponseToUserAnswer(true);
             }
         });
 
@@ -49,25 +45,46 @@ public class QuizActivity extends AppCompatActivity {
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mQuestionBank[mCurrentQuestion].isAnswerTrue()){
-                    Toast.makeText(QuizActivity.this, R.string.feedback_wrong, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.feedback_correct, Toast.LENGTH_SHORT).show();
-                }            }
+                displayFeedbackInResponseToUserAnswer(false);
+            }
         });
 
         mNextButton = (Button) findViewById(R.id.button_next);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mCurrentQuestion >= mQuestionBank.length -1){
-                    Toast.makeText(QuizActivity.this, R.string.feedback_no_more_questions_message, Toast.LENGTH_SHORT).show();
+                if (mCurrentQuestion >= mQuestionBank.length - 1) {
+                    displayMessage(R.string.feedback_no_more_questions_message);
                 } else {
                     mCurrentQuestion += 1;
-                    mQuestionTextView.setText(mQuestionBank[mCurrentQuestion].getTextResourceId());
+                    updateQuestionText();
                 }
             }
         });
+    }
+
+    private void updateQuestionText() {
+        mQuestionTextView.setText(mQuestionBank[mCurrentQuestion].getTextResourceId());
+    }
+
+    private void displayFeedbackInResponseToUserAnswer(boolean userAnsweredTrue){
+        if(userAnsweredTrue){
+            if (mQuestionBank[mCurrentQuestion].isAnswerTrue()) {
+                displayMessage(R.string.feedback_correct);
+            } else {
+                displayMessage(R.string.feedback_wrong);
+            }
+        } else {
+            if (!mQuestionBank[mCurrentQuestion].isAnswerTrue()) {
+                displayMessage(R.string.feedback_correct);
+            } else {
+                displayMessage(R.string.feedback_wrong);
+            }
+        }
+    }
+
+    private void displayMessage(int displayTextResourceId) {
+        Toast.makeText(getApplicationContext(), displayTextResourceId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
