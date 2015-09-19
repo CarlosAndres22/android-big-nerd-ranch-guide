@@ -20,7 +20,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        mQuestion = new Question(R.string.toronto_population_question,true);
+        mQuestion = new Question(R.string.question_toronto_population,true);
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         mQuestionTextView.setText(mQuestion.getTextResourceId());
