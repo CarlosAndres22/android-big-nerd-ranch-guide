@@ -11,4 +11,5 @@
     <string name="feedback_correct">Well done</string>
     <string name="feedback_wrong">Try again</string>
     <string name="button_next">Next</string>
+    <string name="feedback_no_more_questions_message">No more questions to display</string>
 </resources>

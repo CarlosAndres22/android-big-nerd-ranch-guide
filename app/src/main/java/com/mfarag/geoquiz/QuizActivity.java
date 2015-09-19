@@ -14,6 +14,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView mQuestionTextView;
     private Button mTrueButton;
     private Button mFalseButton;
+    private Button mNextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,14 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(QuizActivity.this, R.string.feedback_wrong, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mNextButton = (Button) findViewById(R.id.button_next);
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(QuizActivity.this, R.string.feedback_no_more_questions_message, Toast.LENGTH_SHORT).show();
             }
         });
     }
