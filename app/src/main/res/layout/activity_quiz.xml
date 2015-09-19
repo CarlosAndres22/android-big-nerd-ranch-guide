@@ -38,4 +38,11 @@
             android:text="@string/button_false" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:text="@string/button_next"/>
+
 </LinearLayout>
