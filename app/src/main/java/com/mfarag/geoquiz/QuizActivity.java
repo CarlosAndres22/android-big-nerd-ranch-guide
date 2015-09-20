@@ -14,6 +14,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView mQuestionTextView;
     private Button mTrueButton;
     private Button mFalseButton;
+    private Button mPreviousButton;
     private Button mNextButton;
     private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_toronto_population, true),
@@ -76,6 +77,18 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+        mPreviousButton = (Button) findViewById(R.id.button_previous);
+        mPreviousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentQuestion <= 0) {
+                    displayMessage(R.string.feedback_no_more_questions_message);
+                } else {
+                    mCurrentQuestion -= 1;
+                    updateQuestionText();
+                }
+            }
+        });
 
     }
 

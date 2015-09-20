@@ -38,13 +38,28 @@
             android:text="@string/button_false" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_next"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="24dp"
-        android:drawableRight="@drawable/arrow_right"
-        android:drawablePadding="4dp"
-        android:text="@string/button_next"/>
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:drawableLeft="@drawable/arrow_left"
+            android:drawablePadding="4dp"
+            android:text="@string/button_previous"/>
+        <Button
+            android:id="@+id/button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:drawableRight="@drawable/arrow_right"
+            android:drawablePadding="4dp"
+            android:text="@string/button_next"/>
+    </LinearLayout>
 
 </LinearLayout>
