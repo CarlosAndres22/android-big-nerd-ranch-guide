@@ -49,18 +49,10 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void displayFeedbackInResponseToUserAnswer(boolean userAnsweredTrue){
-        if(userAnsweredTrue){
-            if (mQuestionBank[mCurrentQuestion].isAnswerTrue()) {
-                displayMessage(R.string.feedback_correct);
-            } else {
-                displayMessage(R.string.feedback_wrong);
-            }
+        if((userAnsweredTrue && mQuestionBank[mCurrentQuestion].isAnswerTrue()) || (!userAnsweredTrue && !mQuestionBank[mCurrentQuestion].isAnswerTrue())){
+            displayMessage(R.string.feedback_correct);
         } else {
-            if (!mQuestionBank[mCurrentQuestion].isAnswerTrue()) {
-                displayMessage(R.string.feedback_correct);
-            } else {
-                displayMessage(R.string.feedback_wrong);
-            }
+            displayMessage(R.string.feedback_wrong);
         }
     }
 
