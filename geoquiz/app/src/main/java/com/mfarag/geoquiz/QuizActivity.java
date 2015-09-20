@@ -134,7 +134,7 @@ public class QuizActivity extends AppCompatActivity {
                         break;
                     case R.id.button_show_answer:
                         Log.d(TAG, "User wants to see the answer for this question");
-                        startActivity(new Intent(QuizActivity.this,AnswerActivity.class));
+                        startActivity(AnswerActivity.newIntent(QuizActivity.this,mQuestionBank[mCurrentQuestion].isAnswerTrue()));
                         break;
                     default:
                         // nothing to be done...

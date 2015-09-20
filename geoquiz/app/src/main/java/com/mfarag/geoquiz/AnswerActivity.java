@@ -1,16 +1,30 @@
 package com.mfarag.geoquiz;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class AnswerActivity extends AppCompatActivity {
+    private static final String EXTRA_ANSWER_IS_TRUE = "com.mfarag.geoquiz.answer_is_true";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
+        final boolean answerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
+
+        findViewById(R.id.button_answer_show_answer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((TextView) findViewById(R.id.answer_text)).setText(String.valueOf(answerIsTrue));
+            }
+        });
     }
 
     @Override
@@ -33,5 +47,9 @@ public class AnswerActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static Intent newIntent(Context context, boolean answerIsTrue) {
+        return new Intent(context, AnswerActivity.class).putExtra(EXTRA_ANSWER_IS_TRUE, answerIsTrue);
     }
 }
