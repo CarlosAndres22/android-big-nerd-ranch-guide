@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,17 +28,10 @@ public class QuizActivity extends AppCompatActivity {
         mQuestionTextView.setOnClickListener(createOnClickListener(mQuestionTextView));
         updateQuestionText(mQuestionTextView);
 
-        Button trueButton = (Button) findViewById(R.id.button_true);
-        trueButton.setOnClickListener(createOnClickListener(mQuestionTextView));
-
-        Button falseButton = (Button) findViewById(R.id.button_false);
-        falseButton.setOnClickListener(createOnClickListener(mQuestionTextView));
-
-        ImageButton nextButton = (ImageButton) findViewById(R.id.button_next);
-        nextButton.setOnClickListener( createOnClickListener(mQuestionTextView));
-
-        ImageButton previousButton = (ImageButton) findViewById(R.id.button_previous);
-        previousButton.setOnClickListener(createOnClickListener(mQuestionTextView));
+        findViewById(R.id.button_true).setOnClickListener(createOnClickListener(mQuestionTextView));
+        findViewById(R.id.button_false).setOnClickListener(createOnClickListener(mQuestionTextView));
+        findViewById(R.id.button_next).setOnClickListener(createOnClickListener(mQuestionTextView));
+        findViewById(R.id.button_previous).setOnClickListener(createOnClickListener(mQuestionTextView));
 
     }
 
@@ -48,8 +39,8 @@ public class QuizActivity extends AppCompatActivity {
         textView.setText(mQuestionBank[mCurrentQuestion].getTextResourceId());
     }
 
-    private void displayFeedbackInResponseToUserAnswer(boolean userAnsweredTrue){
-        if((userAnsweredTrue && mQuestionBank[mCurrentQuestion].isAnswerTrue()) || (!userAnsweredTrue && !mQuestionBank[mCurrentQuestion].isAnswerTrue())){
+    private void displayFeedbackInResponseToUserAnswer(boolean userAnsweredTrue) {
+        if ((userAnsweredTrue && mQuestionBank[mCurrentQuestion].isAnswerTrue()) || (!userAnsweredTrue && !mQuestionBank[mCurrentQuestion].isAnswerTrue())) {
             displayMessage(R.string.feedback_correct);
         } else {
             displayMessage(R.string.feedback_wrong);
@@ -82,11 +73,11 @@ public class QuizActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private View.OnClickListener createOnClickListener(final TextView textView){
+    private View.OnClickListener createOnClickListener(final TextView textView) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.button_previous:
                         if (mCurrentQuestion <= 0) {
                             displayMessage(R.string.feedback_no_more_questions_message);
