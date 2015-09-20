@@ -25,13 +25,14 @@ public class QuizActivity extends AppCompatActivity {
         mCurrentQuestion = 0;
 
         final TextView mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
-        mQuestionTextView.setOnClickListener(createOnClickListener(mQuestionTextView));
+        View.OnClickListener onClickListener = createOnClickListener(mQuestionTextView);
         updateQuestionText(mQuestionTextView);
+        mQuestionTextView.setOnClickListener(onClickListener);
 
-        findViewById(R.id.button_true).setOnClickListener(createOnClickListener(mQuestionTextView));
-        findViewById(R.id.button_false).setOnClickListener(createOnClickListener(mQuestionTextView));
-        findViewById(R.id.button_next).setOnClickListener(createOnClickListener(mQuestionTextView));
-        findViewById(R.id.button_previous).setOnClickListener(createOnClickListener(mQuestionTextView));
+        findViewById(R.id.button_true).setOnClickListener(onClickListener);
+        findViewById(R.id.button_false).setOnClickListener(onClickListener);
+        findViewById(R.id.button_next).setOnClickListener(onClickListener);
+        findViewById(R.id.button_previous).setOnClickListener(onClickListener);
 
     }
 
