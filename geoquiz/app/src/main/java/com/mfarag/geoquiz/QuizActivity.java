@@ -2,6 +2,7 @@ package com.mfarag.geoquiz;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
+    public static final String TAG = "QuizActivity";
     public static final String KEY_QUESTION_INDEX = "questionIndex";
     final private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_toronto_population, true),
@@ -49,7 +51,9 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void updateQuestionText(TextView textView) {
-        textView.setText(mQuestionBank[mCurrentQuestion].getTextResourceId());
+        int textResourceId = mQuestionBank[mCurrentQuestion].getTextResourceId();
+        Log.d(TAG, "updateQuestionText " + getString(textResourceId));
+        textView.setText(textResourceId);
     }
 
     private void displayFeedbackInResponseToUserAnswer(boolean userAnsweredTrue) {
@@ -61,6 +65,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void displayMessage(int displayTextResourceId) {
+        Log.d(TAG, "displayMessage " + getString(displayTextResourceId));
         Toast.makeText(getApplicationContext(), displayTextResourceId, Toast.LENGTH_SHORT).show();
     }
 
@@ -90,29 +95,39 @@ public class QuizActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "Something was clicked");
                 switch (v.getId()) {
                     case R.id.button_previous:
+                        Log.d(TAG, "previous button clicked");
                         if (mCurrentQuestion <= 0) {
+                            Log.d(TAG, "First question can not fine any previous questions");
                             displayMessage(R.string.feedback_no_more_questions_message);
                         } else {
                             mCurrentQuestion -= 1;
+                            Log.d(TAG, "Moving to previous question, new question index: " + mCurrentQuestion);
                             updateQuestionText(textView);
                         }
                         break;
                     case R.id.question_text_view:
+                        Log.d(TAG, "Question text clicked");
                         // Intentionally falling through
                     case R.id.button_next:
+                        Log.d(TAG, "Next button clicked");
                         if (mCurrentQuestion >= mQuestionBank.length - 1) {
+                            Log.d(TAG, "Last question can not fine any next questions");
                             displayMessage(R.string.feedback_no_more_questions_message);
                         } else {
                             mCurrentQuestion += 1;
+                            Log.d(TAG, "Moving to next question, new question index: " + mCurrentQuestion);
                             updateQuestionText(textView);
                         }
                         break;
                     case R.id.button_true:
+                        Log.d(TAG, "User decided the answer is correct");
                         displayFeedbackInResponseToUserAnswer(true);
                         break;
                     case R.id.button_false:
+                        Log.d(TAG, "User decided the answer is wrong");
                         displayFeedbackInResponseToUserAnswer(false);
                         break;
                     default:
