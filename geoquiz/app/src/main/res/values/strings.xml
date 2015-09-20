@@ -15,4 +15,7 @@
     <string name="button_previous">Prev</string>
     <string name="button_next_description">Next Question</string>
     <string name="button_previous_description">Previous Question</string>
+    <string name="title_activity_answer">Answer</string>
+    <string name="answer_warning">Are you sure you want to do this?</string>
+    <string name="button_answer_title">Show Answer</string>
 </resources>
