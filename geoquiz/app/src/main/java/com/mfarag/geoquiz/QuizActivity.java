@@ -10,8 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
-    public static final String TAG = "QuizActivity";
-    public static final String KEY_QUESTION_INDEX = "questionIndex";
+    private static final String TAG = "QuizActivity";
+    private static final String KEY_QUESTION_INDEX = "questionIndex";
     final private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_toronto_population, true),
             new Question(R.string.question_toronto_capital, false),
