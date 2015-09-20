@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
+    // Todo: Attempt to turn fields into variables
     private TextView mQuestionTextView;
     private Button mTrueButton;
     private Button mFalseButton;
@@ -61,6 +62,21 @@ public class QuizActivity extends AppCompatActivity {
                 }
             }
         });
+
+        mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentQuestion >= mQuestionBank.length - 1) {
+                    displayMessage(R.string.feedback_no_more_questions_message);
+                } else {
+                    mCurrentQuestion += 1;
+                    updateQuestionText();
+                }
+            }
+        });
+
+
     }
 
     private void updateQuestionText() {
