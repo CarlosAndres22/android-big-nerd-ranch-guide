@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
+    public static final String KEY_QUESTION_INDEX = "questionIndex";
     final private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_toronto_population, true),
             new Question(R.string.question_toronto_capital, false),
@@ -22,7 +23,13 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        if (savedInstanceState != null) {
+            mCurrentQuestion = savedInstanceState.getInt(KEY_QUESTION_INDEX,0);
+        } else {
         mCurrentQuestion = 0;
+
+        }
+
 
         final TextView mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         View.OnClickListener onClickListener = createOnClickListener(mQuestionTextView);
@@ -33,7 +40,12 @@ public class QuizActivity extends AppCompatActivity {
         findViewById(R.id.button_false).setOnClickListener(onClickListener);
         findViewById(R.id.button_next).setOnClickListener(onClickListener);
         findViewById(R.id.button_previous).setOnClickListener(onClickListener);
+    }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_QUESTION_INDEX, mCurrentQuestion);
     }
 
     private void updateQuestionText(TextView textView) {
