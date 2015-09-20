@@ -11,12 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
-    // Todo: Attempt to turn fields into variables
-    private TextView mQuestionTextView;
-    private Button mTrueButton;
-    private Button mFalseButton;
-    private ImageButton mPreviousButton;
-    private ImageButton mNextButton;
     private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_toronto_population, true),
             new Question(R.string.question_toronto_capital, false),
@@ -31,12 +25,12 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
 
-        mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+        final TextView mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         mCurrentQuestion = 0;
-        updateQuestionText();
+        updateQuestionText(mQuestionTextView);
 
-        mTrueButton = (Button) findViewById(R.id.button_true);
-        mTrueButton.setOnClickListener(new View.OnClickListener() {
+        Button trueButton = (Button) findViewById(R.id.button_true);
+        trueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 displayFeedbackInResponseToUserAnswer(true);
@@ -44,42 +38,41 @@ public class QuizActivity extends AppCompatActivity {
         });
 
 
-        mFalseButton = (Button) findViewById(R.id.button_false);
-        mFalseButton.setOnClickListener(new View.OnClickListener() {
+        Button falseButton = (Button) findViewById(R.id.button_false);
+        falseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 displayFeedbackInResponseToUserAnswer(false);
             }
         });
 
-        mNextButton = (ImageButton) findViewById(R.id.button_next);
-        mNextButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton nextButton = (ImageButton) findViewById(R.id.button_next);
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mCurrentQuestion >= mQuestionBank.length - 1) {
                     displayMessage(R.string.feedback_no_more_questions_message);
                 } else {
                     mCurrentQuestion += 1;
-                    updateQuestionText();
+                    updateQuestionText(mQuestionTextView);
                 }
             }
         });
 
 
-        mPreviousButton = (ImageButton) findViewById(R.id.button_previous);
-        mPreviousButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton previousButton = (ImageButton) findViewById(R.id.button_previous);
+        previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mCurrentQuestion <= 0) {
                     displayMessage(R.string.feedback_no_more_questions_message);
                 } else {
                     mCurrentQuestion -= 1;
-                    updateQuestionText();
+                    updateQuestionText(mQuestionTextView);
                 }
             }
         });
 
-        mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         mQuestionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,15 +80,15 @@ public class QuizActivity extends AppCompatActivity {
                     displayMessage(R.string.feedback_no_more_questions_message);
                 } else {
                     mCurrentQuestion += 1;
-                    updateQuestionText();
+                    updateQuestionText(mQuestionTextView);
                 }
             }
         });
 
     }
 
-    private void updateQuestionText() {
-        mQuestionTextView.setText(mQuestionBank[mCurrentQuestion].getTextResourceId());
+    private void updateQuestionText(TextView textView) {
+        textView.setText(mQuestionBank[mCurrentQuestion].getTextResourceId());
     }
 
     private void displayFeedbackInResponseToUserAnswer(boolean userAnsweredTrue){
