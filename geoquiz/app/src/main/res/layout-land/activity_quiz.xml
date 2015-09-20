@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,20 +7,20 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context=".QuizActivity"
-    android:gravity="center">
+    tools:context=".QuizActivity">
 
     <TextView
         android:id="@+id/question_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="24dp" />
+        android:padding="24dp"
+        android:layout_gravity="top|center"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
+        android:layout_gravity="center_vertical|center_horizontal"
         >
 
         <Button
@@ -38,11 +38,6 @@
             android:text="@string/button_false" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/button_previous"
@@ -50,14 +45,16 @@
             android:layout_height="wrap_content"
             android:padding="24dp"
             android:contentDescription="@string/button_previous_description"
-            android:src="@drawable/arrow_left"/>
+            android:src="@drawable/arrow_left"
+            android:layout_gravity="bottom|left"/>
+
         <ImageButton
             android:id="@+id/button_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="24dp"
             android:contentDescription="@string/button_next_description"
-            android:src="@drawable/arrow_right"/>
-    </LinearLayout>
+            android:src="@drawable/arrow_right"
+            android:layout_gravity="bottom|right"/>
 
-</LinearLayout>
+</FrameLayout>
