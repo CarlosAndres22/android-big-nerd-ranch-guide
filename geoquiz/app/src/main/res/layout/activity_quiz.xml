@@ -51,6 +51,14 @@
             android:padding="24dp"
             android:contentDescription="@string/button_previous_description"
             android:src="@drawable/arrow_left"/>
+
+        <Button
+            android:id="@+id/button_show_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_show_answer"
+            android:padding="24dp"/>
+
         <ImageButton
             android:id="@+id/button_next"
             android:layout_width="wrap_content"
