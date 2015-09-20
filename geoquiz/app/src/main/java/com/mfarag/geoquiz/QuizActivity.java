@@ -1,5 +1,6 @@
 package com.mfarag.geoquiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -42,6 +43,7 @@ public class QuizActivity extends AppCompatActivity {
         findViewById(R.id.button_false).setOnClickListener(onClickListener);
         findViewById(R.id.button_next).setOnClickListener(onClickListener);
         findViewById(R.id.button_previous).setOnClickListener(onClickListener);
+        findViewById(R.id.button_show_answer).setOnClickListener(onClickListener);
     }
 
     @Override
@@ -129,6 +131,10 @@ public class QuizActivity extends AppCompatActivity {
                     case R.id.button_false:
                         Log.d(TAG, "User decided the answer is wrong");
                         displayFeedbackInResponseToUserAnswer(false);
+                        break;
+                    case R.id.button_show_answer:
+                        Log.d(TAG, "User wants to see the answer for this question");
+                        startActivity(new Intent(QuizActivity.this,AnswerActivity.class));
                         break;
                     default:
                         // nothing to be done...
