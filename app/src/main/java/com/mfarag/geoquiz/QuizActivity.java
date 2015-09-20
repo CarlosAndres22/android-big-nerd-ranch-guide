@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
-    private Question[] mQuestionBank = new Question[]{
+    final private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_toronto_population, true),
             new Question(R.string.question_toronto_capital, false),
             new Question(R.string.question_toronto_language, true)
@@ -24,66 +24,23 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        mCurrentQuestion = 0;
 
         final TextView mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
-        mCurrentQuestion = 0;
+        mQuestionTextView.setOnClickListener(createOnClickListener(mQuestionTextView));
         updateQuestionText(mQuestionTextView);
 
         Button trueButton = (Button) findViewById(R.id.button_true);
-        trueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayFeedbackInResponseToUserAnswer(true);
-            }
-        });
-
+        trueButton.setOnClickListener(createOnClickListener(mQuestionTextView));
 
         Button falseButton = (Button) findViewById(R.id.button_false);
-        falseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayFeedbackInResponseToUserAnswer(false);
-            }
-        });
+        falseButton.setOnClickListener(createOnClickListener(mQuestionTextView));
 
         ImageButton nextButton = (ImageButton) findViewById(R.id.button_next);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCurrentQuestion >= mQuestionBank.length - 1) {
-                    displayMessage(R.string.feedback_no_more_questions_message);
-                } else {
-                    mCurrentQuestion += 1;
-                    updateQuestionText(mQuestionTextView);
-                }
-            }
-        });
-
+        nextButton.setOnClickListener( createOnClickListener(mQuestionTextView));
 
         ImageButton previousButton = (ImageButton) findViewById(R.id.button_previous);
-        previousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCurrentQuestion <= 0) {
-                    displayMessage(R.string.feedback_no_more_questions_message);
-                } else {
-                    mCurrentQuestion -= 1;
-                    updateQuestionText(mQuestionTextView);
-                }
-            }
-        });
-
-        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCurrentQuestion >= mQuestionBank.length - 1) {
-                    displayMessage(R.string.feedback_no_more_questions_message);
-                } else {
-                    mCurrentQuestion += 1;
-                    updateQuestionText(mQuestionTextView);
-                }
-            }
-        });
+        previousButton.setOnClickListener(createOnClickListener(mQuestionTextView));
 
     }
 
@@ -132,4 +89,43 @@ public class QuizActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private View.OnClickListener createOnClickListener(final TextView textView){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.button_previous:
+                        if (mCurrentQuestion <= 0) {
+                            displayMessage(R.string.feedback_no_more_questions_message);
+                        } else {
+                            mCurrentQuestion -= 1;
+                            updateQuestionText(textView);
+                        }
+                        break;
+                    case R.id.question_text_view:
+                        // Intentionally falling through
+                    case R.id.button_next:
+                        if (mCurrentQuestion >= mQuestionBank.length - 1) {
+                            displayMessage(R.string.feedback_no_more_questions_message);
+                        } else {
+                            mCurrentQuestion += 1;
+                            updateQuestionText(textView);
+                        }
+                        break;
+                    case R.id.button_true:
+                        displayFeedbackInResponseToUserAnswer(true);
+                        break;
+                    case R.id.button_false:
+                        displayFeedbackInResponseToUserAnswer(false);
+                        break;
+                    default:
+                        // nothing to be done...
+                        break;
+                }
+
+            }
+        };
+    }
+
 }
