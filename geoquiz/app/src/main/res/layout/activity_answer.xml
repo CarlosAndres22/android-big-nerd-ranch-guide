@@ -27,6 +27,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_answer_title"/>
+        android:padding="24dp"
+        android:text="@string/button_answer_title"
+        />
 
 </LinearLayout>
