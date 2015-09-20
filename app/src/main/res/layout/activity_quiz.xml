@@ -44,22 +44,20 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/button_previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="24dp"
-            android:drawableLeft="@drawable/arrow_left"
-            android:drawablePadding="4dp"
-            android:text="@string/button_previous"/>
-        <Button
+            android:contentDescription="@string/button_previous_description"
+            android:src="@drawable/arrow_left"/>
+        <ImageButton
             android:id="@+id/button_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="24dp"
-            android:drawableRight="@drawable/arrow_right"
-            android:drawablePadding="4dp"
-            android:text="@string/button_next"/>
+            android:contentDescription="@string/button_next_description"
+            android:src="@drawable/arrow_right"/>
     </LinearLayout>
 
 </LinearLayout>

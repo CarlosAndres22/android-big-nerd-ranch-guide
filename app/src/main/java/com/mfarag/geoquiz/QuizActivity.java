@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,8 +15,8 @@ public class QuizActivity extends AppCompatActivity {
     private TextView mQuestionTextView;
     private Button mTrueButton;
     private Button mFalseButton;
-    private Button mPreviousButton;
-    private Button mNextButton;
+    private ImageButton mPreviousButton;
+    private ImageButton mNextButton;
     private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_toronto_population, true),
             new Question(R.string.question_toronto_capital, false),
@@ -51,7 +52,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mNextButton = (Button) findViewById(R.id.button_next);
+        mNextButton = (ImageButton) findViewById(R.id.button_next);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +60,20 @@ public class QuizActivity extends AppCompatActivity {
                     displayMessage(R.string.feedback_no_more_questions_message);
                 } else {
                     mCurrentQuestion += 1;
+                    updateQuestionText();
+                }
+            }
+        });
+
+
+        mPreviousButton = (ImageButton) findViewById(R.id.button_previous);
+        mPreviousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentQuestion <= 0) {
+                    displayMessage(R.string.feedback_no_more_questions_message);
+                } else {
+                    mCurrentQuestion -= 1;
                     updateQuestionText();
                 }
             }
@@ -72,19 +87,6 @@ public class QuizActivity extends AppCompatActivity {
                     displayMessage(R.string.feedback_no_more_questions_message);
                 } else {
                     mCurrentQuestion += 1;
-                    updateQuestionText();
-                }
-            }
-        });
-
-        mPreviousButton = (Button) findViewById(R.id.button_previous);
-        mPreviousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCurrentQuestion <= 0) {
-                    displayMessage(R.string.feedback_no_more_questions_message);
-                } else {
-                    mCurrentQuestion -= 1;
                     updateQuestionText();
                 }
             }

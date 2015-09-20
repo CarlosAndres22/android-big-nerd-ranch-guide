@@ -13,4 +13,6 @@
     <string name="button_next">Next</string>
     <string name="feedback_no_more_questions_message">No more questions to display</string>
     <string name="button_previous">Prev</string>
+    <string name="button_next_description">Next Question</string>
+    <string name="button_previous_description">Previous Question</string>
 </resources>
