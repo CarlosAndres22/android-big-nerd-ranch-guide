@@ -1,6 +1,5 @@
 package com.mfarag.geoquiz;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,9 +26,9 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         if (savedInstanceState != null) {
-            mCurrentQuestion = savedInstanceState.getInt(KEY_QUESTION_INDEX,0);
+            mCurrentQuestion = savedInstanceState.getInt(KEY_QUESTION_INDEX, 0);
         } else {
-        mCurrentQuestion = 0;
+            mCurrentQuestion = 0;
 
         }
 
@@ -134,7 +133,7 @@ public class QuizActivity extends AppCompatActivity {
                         break;
                     case R.id.button_show_answer:
                         Log.d(TAG, "User wants to see the answer for this question");
-                        startActivity(AnswerActivity.newIntent(QuizActivity.this,mQuestionBank[mCurrentQuestion].isAnswerTrue()));
+                        startActivity(AnswerActivity.newIntent(QuizActivity.this, mQuestionBank[mCurrentQuestion].isAnswerTrue()));
                         break;
                     default:
                         // nothing to be done...
