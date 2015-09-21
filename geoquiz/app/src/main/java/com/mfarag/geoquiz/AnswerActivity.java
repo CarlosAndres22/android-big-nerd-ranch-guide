@@ -1,5 +1,6 @@
 package com.mfarag.geoquiz;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 public class AnswerActivity extends AppCompatActivity {
     private static final String EXTRA_ANSWER_IS_TRUE = "com.mfarag.geoquiz.answer_is_true";
+    public static final String EXTRA_ANSWER_SHOWN = "com.mfarag.geoquiz.answer_shown";
 
 
     @Override
@@ -23,6 +25,7 @@ public class AnswerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ((TextView) findViewById(R.id.answer_text)).setText(String.valueOf(answerIsTrue));
+                setResult(Activity.RESULT_OK, new Intent().putExtra(EXTRA_ANSWER_SHOWN, true));
             }
         });
     }
@@ -51,5 +54,9 @@ public class AnswerActivity extends AppCompatActivity {
 
     public static Intent newIntent(Context context, boolean answerIsTrue) {
         return new Intent(context, AnswerActivity.class).putExtra(EXTRA_ANSWER_IS_TRUE, answerIsTrue);
+    }
+
+    public static boolean isAnswerDisplayed(Intent intent) {
+        return intent != null && intent.getBooleanExtra(EXTRA_ANSWER_SHOWN, false);
     }
 }

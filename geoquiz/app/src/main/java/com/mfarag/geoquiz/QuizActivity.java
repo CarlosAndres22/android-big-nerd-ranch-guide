@@ -1,5 +1,6 @@
 package com.mfarag.geoquiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 public class QuizActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
     private static final String KEY_QUESTION_INDEX = "questionIndex";
+    public static final int REQUEST_CODE_ANSWER_ACTIVITY = 0;
     final private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_toronto_population, true),
             new Question(R.string.question_toronto_capital, false),
@@ -49,6 +51,14 @@ public class QuizActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_QUESTION_INDEX, mCurrentQuestion);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (AnswerActivity.isAnswerDisplayed(data)) {
+            Toast.makeText(QuizActivity.this, "You have seen the answer!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateQuestionText(TextView textView) {
@@ -133,7 +143,8 @@ public class QuizActivity extends AppCompatActivity {
                         break;
                     case R.id.button_show_answer:
                         Log.d(TAG, "User wants to see the answer for this question");
-                        startActivity(AnswerActivity.newIntent(QuizActivity.this, mQuestionBank[mCurrentQuestion].isAnswerTrue()));
+//                        startActivity(AnswerActivity.newIntent(QuizActivity.this, mQuestionBank[mCurrentQuestion].isAnswerTrue()));
+                        startActivityForResult(AnswerActivity.newIntent(QuizActivity.this, mQuestionBank[mCurrentQuestion].isAnswerTrue()), REQUEST_CODE_ANSWER_ACTIVITY);
                         break;
                     default:
                         // nothing to be done...
