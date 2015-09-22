@@ -14,12 +14,15 @@ public class QuizActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
     private static final String KEY_QUESTION_INDEX = "questionIndex";
     public static final int REQUEST_CODE_ANSWER_ACTIVITY = 0;
+    private int mCurrentQuestion;
+
+    private  TextView mAnswerStatus;
     final private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_toronto_population, true),
             new Question(R.string.question_toronto_capital, false),
             new Question(R.string.question_toronto_language, true)
     };
-    private int mCurrentQuestion;
+    private int[] mQuestionsStatus = new int[mQuestionBank.length];
 
 
     @Override
@@ -34,11 +37,14 @@ public class QuizActivity extends AppCompatActivity {
 
         }
 
-
+        mAnswerStatus = (TextView) findViewById(R.id.answer_status);
+        updateAnswerStatus();
         final TextView mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         View.OnClickListener onClickListener = createOnClickListener(mQuestionTextView);
         updateQuestionText(mQuestionTextView);
+        updateAnswerStatus();
         mQuestionTextView.setOnClickListener(onClickListener);
+
 
         findViewById(R.id.button_true).setOnClickListener(onClickListener);
         findViewById(R.id.button_false).setOnClickListener(onClickListener);
@@ -58,7 +64,13 @@ public class QuizActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (AnswerActivity.isAnswerDisplayed(data)) {
             Toast.makeText(QuizActivity.this, "You have seen the answer!", Toast.LENGTH_SHORT).show();
+            mQuestionsStatus[mCurrentQuestion] = Question.AnswerStatus.VIEWED_ANSWER.getVal();
+            updateAnswerStatus();
         }
+    }
+
+    private void updateAnswerStatus(){
+        mAnswerStatus.setText(Question.AnswerStatus.getStatus(mQuestionsStatus[mCurrentQuestion]).toString());
     }
 
     private void updateQuestionText(TextView textView) {
@@ -69,8 +81,11 @@ public class QuizActivity extends AppCompatActivity {
 
     private void displayFeedbackInResponseToUserAnswer(boolean userAnsweredTrue) {
         if ((userAnsweredTrue && mQuestionBank[mCurrentQuestion].isAnswerTrue()) || (!userAnsweredTrue && !mQuestionBank[mCurrentQuestion].isAnswerTrue())) {
+            mQuestionsStatus[mCurrentQuestion] = Question.AnswerStatus.CORRECT.getVal();
+
             displayMessage(R.string.feedback_correct);
         } else {
+            mQuestionsStatus[mCurrentQuestion] = Question.AnswerStatus.WRONG.getVal();
             displayMessage(R.string.feedback_wrong);
         }
     }
@@ -113,10 +128,12 @@ public class QuizActivity extends AppCompatActivity {
                         if (mCurrentQuestion <= 0) {
                             Log.d(TAG, "First question can not fine any previous questions");
                             displayMessage(R.string.feedback_no_more_questions_message);
+                            updateAnswerStatus();
                         } else {
                             mCurrentQuestion -= 1;
                             Log.d(TAG, "Moving to previous question, new question index: " + mCurrentQuestion);
                             updateQuestionText(textView);
+                            updateAnswerStatus();
                         }
                         break;
                     case R.id.question_text_view:
@@ -127,19 +144,23 @@ public class QuizActivity extends AppCompatActivity {
                         if (mCurrentQuestion >= mQuestionBank.length - 1) {
                             Log.d(TAG, "Last question can not fine any next questions");
                             displayMessage(R.string.feedback_no_more_questions_message);
+                            updateAnswerStatus();
                         } else {
                             mCurrentQuestion += 1;
                             Log.d(TAG, "Moving to next question, new question index: " + mCurrentQuestion);
                             updateQuestionText(textView);
+                            updateAnswerStatus();
                         }
                         break;
                     case R.id.button_true:
                         Log.d(TAG, "User decided the answer is correct");
                         displayFeedbackInResponseToUserAnswer(true);
+                        updateAnswerStatus();
                         break;
                     case R.id.button_false:
                         Log.d(TAG, "User decided the answer is wrong");
                         displayFeedbackInResponseToUserAnswer(false);
+                        updateAnswerStatus();
                         break;
                     case R.id.button_show_answer:
                         Log.d(TAG, "User wants to see the answer for this question");
