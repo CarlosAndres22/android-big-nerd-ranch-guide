@@ -1,6 +1,7 @@
 package com.mfarag.geoquiz;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -58,7 +59,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_QUESTION_INDEX, mCurrentQuestion);
-        outState.putIntArray(KEY_QUESTIONS_STATUS,mQuestionsStatus);
+        outState.putIntArray(KEY_QUESTIONS_STATUS, mQuestionsStatus);
     }
 
     @Override
@@ -113,6 +114,10 @@ public class QuizActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if(id== R.id.api_version){
+            Toast.makeText(QuizActivity.this, "Api Version: " + Build.VERSION.SDK_INT, Toast.LENGTH_SHORT).show();
             return true;
         }
 
