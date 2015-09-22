@@ -14,6 +14,7 @@ public class QuizActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_ANSWER_ACTIVITY = 0;
     private static final String TAG = "QuizActivity";
     private static final String KEY_QUESTION_INDEX = "questionIndex";
+    public static final String KEY_QUESTIONS_STATUS = "questionsStatus";
     final private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_toronto_population, true),
             new Question(R.string.question_toronto_capital, false),
@@ -31,6 +32,7 @@ public class QuizActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             mCurrentQuestion = savedInstanceState.getInt(KEY_QUESTION_INDEX, 0);
+            mQuestionsStatus = savedInstanceState.getIntArray(KEY_QUESTIONS_STATUS);
         } else {
             mCurrentQuestion = 0;
 
@@ -56,6 +58,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_QUESTION_INDEX, mCurrentQuestion);
+        outState.putIntArray(KEY_QUESTIONS_STATUS,mQuestionsStatus);
     }
 
     @Override
