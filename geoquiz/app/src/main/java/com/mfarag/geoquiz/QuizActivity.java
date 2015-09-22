@@ -11,17 +11,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
+    public static final int REQUEST_CODE_ANSWER_ACTIVITY = 0;
     private static final String TAG = "QuizActivity";
     private static final String KEY_QUESTION_INDEX = "questionIndex";
-    public static final int REQUEST_CODE_ANSWER_ACTIVITY = 0;
-    private int mCurrentQuestion;
-
-    private  TextView mAnswerStatus;
     final private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_toronto_population, true),
             new Question(R.string.question_toronto_capital, false),
             new Question(R.string.question_toronto_language, true)
     };
+    private int mCurrentQuestion;
+    private TextView mAnswerStatus;
     private int[] mQuestionsStatus = new int[mQuestionBank.length];
 
 
@@ -69,7 +68,7 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    private void updateAnswerStatus(){
+    private void updateAnswerStatus() {
         mAnswerStatus.setText(Question.AnswerStatus.getStatus(mQuestionsStatus[mCurrentQuestion]).toString());
     }
 

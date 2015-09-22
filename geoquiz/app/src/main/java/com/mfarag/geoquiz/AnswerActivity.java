@@ -11,11 +11,18 @@ import android.view.View;
 import android.widget.TextView;
 
 public class AnswerActivity extends AppCompatActivity {
-    private static final String EXTRA_ANSWER_IS_TRUE = "com.mfarag.geoquiz.answer_is_true";
     public static final String EXTRA_ANSWER_SHOWN = "com.mfarag.geoquiz.answer_shown";
     public static final String KEY_ANSWER_SHOWN = "answer shown";
+    private static final String EXTRA_ANSWER_IS_TRUE = "com.mfarag.geoquiz.answer_is_true";
     public static boolean sAnswerWasShown = false;
 
+    public static Intent newIntent(Context context, boolean answerIsTrue) {
+        return new Intent(context, AnswerActivity.class).putExtra(EXTRA_ANSWER_IS_TRUE, answerIsTrue);
+    }
+
+    public static boolean isAnswerDisplayed(Intent intent) {
+        return intent != null && intent.getBooleanExtra(EXTRA_ANSWER_SHOWN, false);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +49,7 @@ public class AnswerActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(KEY_ANSWER_SHOWN,sAnswerWasShown);
+        outState.putBoolean(KEY_ANSWER_SHOWN, sAnswerWasShown);
     }
 
     @Override
@@ -65,13 +72,5 @@ public class AnswerActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public static Intent newIntent(Context context, boolean answerIsTrue) {
-        return new Intent(context, AnswerActivity.class).putExtra(EXTRA_ANSWER_IS_TRUE, answerIsTrue);
-    }
-
-    public static boolean isAnswerDisplayed(Intent intent) {
-        return intent != null && intent.getBooleanExtra(EXTRA_ANSWER_SHOWN, false);
     }
 }

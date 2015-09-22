@@ -34,10 +34,6 @@ public class Question implements Serializable {
             this.message = message;
         }
 
-        public int getVal() {
-            return val;
-        }
-
         public static AnswerStatus getStatus(int val) {
             switch (val) {
                 case 0:
@@ -51,6 +47,10 @@ public class Question implements Serializable {
                 default:
                     return NOT_ANSWERED;
             }
+        }
+
+        public int getVal() {
+            return val;
         }
 
         @Override
