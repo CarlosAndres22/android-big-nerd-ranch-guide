@@ -14,7 +14,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -22,17 +21,26 @@ import java.util.UUID;
  */
 public class CrimeFragment extends Fragment {
     public static final String CRIME_DATE_FORMAT = "EEEE, MMMM d, yyyy";
+    private static final String ARG_CRIME_ID = "crime_id";
     private Crime mCrime;
     private CrimeLab mCrimeLab;
     private EditText mTitleField;
     private CheckBox mSolvedCheckBox;
     private Button mDateButton;
 
+    public static CrimeFragment newInstance(UUID uuid) {
+        CrimeFragment crimeFragment = new CrimeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ARG_CRIME_ID, uuid);
+        crimeFragment.setArguments(bundle);
+        return crimeFragment;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID crimeId = (UUID) getActivity().getIntent().getExtras().getSerializable(CrimeActivity.EXTRA_CRIME_ID);
+        UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrimeLab = CrimeLab.create();
         mCrime = mCrimeLab.getCrime(crimeId);
     }
