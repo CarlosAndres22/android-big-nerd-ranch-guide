@@ -14,12 +14,16 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 /**
  * Created by muhammadfarag on 9/22/15.
  */
 public class CrimeFragment extends Fragment {
     public static final String CRIME_DATE_FORMAT = "EEEE, MMMM d, yyyy";
     private Crime mCrime;
+    private CrimeLab mCrimeLab;
     private EditText mTitleField;
     private CheckBox mSolvedCheckBox;
     private Button mDateButton;
@@ -28,7 +32,9 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCrime = new Crime();
+        UUID crimeId = (UUID) getActivity().getIntent().getExtras().getSerializable(CrimeActivity.EXTRA_CRIME_ID);
+        mCrimeLab = CrimeLab.create();
+        mCrime = mCrimeLab.getCrime(crimeId);
     }
 
     @Nullable
@@ -38,6 +44,8 @@ public class CrimeFragment extends Fragment {
         mTitleField = (EditText) crimeFragmentView.findViewById(R.id.crime_title);
         mSolvedCheckBox = (CheckBox) crimeFragmentView.findViewById(R.id.crime_solved);
         mDateButton = (Button) crimeFragmentView.findViewById(R.id.crime_date);
+
+        mTitleField.setText(mCrime.getTitle());
 
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
