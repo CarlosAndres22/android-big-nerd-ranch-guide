@@ -7,14 +7,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by muhammadfarag on 9/23/15.
@@ -25,6 +26,7 @@ public class CrimeListFragment extends Fragment {
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mCrimeAdapter;
     private int mResultCode;
+    private UUID mUpdatedCrimeId;
 
     @Nullable
     @Override
@@ -42,7 +44,7 @@ public class CrimeListFragment extends Fragment {
         CrimeLab crimeLab = CrimeLab.create();
         List<Crime> crimes = crimeLab.getCrimes();
         if (mCrimeAdapter != null) {
-            mCrimeAdapter.notifyDataSetChanged();
+            mCrimeAdapter.notifyCrimeChanged(mUpdatedCrimeId);
         } else {
             mCrimeAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mCrimeAdapter);
@@ -52,12 +54,15 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         mResultCode = resultCode;
+        if (data != null) {
+            mUpdatedCrimeId = (UUID) data.getSerializableExtra(CrimeFragment.EXTRA_CRIME_ID);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(mResultCode== Activity.RESULT_OK) {
+        if (mResultCode == Activity.RESULT_OK) {
             updateUI();
         }
     }
@@ -85,7 +90,7 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            startActivityForResult(CrimeActivity.newIntent(getActivity(),mCrime.getId()), REQUEST_CODE_CRIME_ACTIVITY);
+            startActivityForResult(CrimeActivity.newIntent(getActivity(), mCrime.getId()), REQUEST_CODE_CRIME_ACTIVITY);
         }
     }
 
@@ -111,6 +116,15 @@ public class CrimeListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mCrimes.size();
+        }
+
+        public void notifyCrimeChanged(UUID crimeId){
+            for (int i = 0; i < mCrimes.size(); i++) {
+                if(mCrimes.get(i).getId().equals(crimeId)){
+                    notifyItemChanged(i);
+                    return;
+                }
+            }
         }
     }
 }

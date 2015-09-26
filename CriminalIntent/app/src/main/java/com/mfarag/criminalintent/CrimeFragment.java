@@ -1,6 +1,7 @@
 package com.mfarag.criminalintent;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import java.util.UUID;
 public class CrimeFragment extends Fragment {
     public static final String CRIME_DATE_FORMAT = "EEEE, MMMM d, yyyy";
     private static final String ARG_CRIME_ID = "crime_id";
+    public static final String EXTRA_CRIME_ID = "com.mfarag.criminalintent.crime_id";
     private Crime mCrime;
     private CrimeLab mCrimeLab;
     private EditText mTitleField;
@@ -47,7 +49,7 @@ public class CrimeFragment extends Fragment {
     }
 
     private void crimeDetailsChanged(){
-        getActivity().setResult(Activity.RESULT_OK);
+        getActivity().setResult(Activity.RESULT_OK, new Intent().putExtra(EXTRA_CRIME_ID,mCrime.getId()));
     }
     @Nullable
     @Override
