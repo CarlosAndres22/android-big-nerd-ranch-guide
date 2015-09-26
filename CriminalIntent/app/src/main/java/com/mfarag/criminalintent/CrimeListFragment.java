@@ -1,5 +1,6 @@
 package com.mfarag.criminalintent;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,8 +21,10 @@ import java.util.List;
  */
 public class CrimeListFragment extends Fragment {
 
+    public static final int REQUEST_CODE_CRIME_ACTIVITY = 0;
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mCrimeAdapter;
+    private int mResultCode;
 
     @Nullable
     @Override
@@ -47,9 +50,16 @@ public class CrimeListFragment extends Fragment {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mResultCode = resultCode;
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        updateUI();
+        if(mResultCode== Activity.RESULT_OK) {
+            updateUI();
+        }
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -75,7 +85,7 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            startActivity(CrimeActivity.newIntent(getActivity(),mCrime.getId()));
+            startActivityForResult(CrimeActivity.newIntent(getActivity(),mCrime.getId()), REQUEST_CODE_CRIME_ACTIVITY);
         }
     }
 

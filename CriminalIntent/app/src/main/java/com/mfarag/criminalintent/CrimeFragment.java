@@ -1,5 +1,6 @@
 package com.mfarag.criminalintent;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -45,6 +46,9 @@ public class CrimeFragment extends Fragment {
         mCrime = mCrimeLab.getCrime(crimeId);
     }
 
+    private void crimeDetailsChanged(){
+        getActivity().setResult(Activity.RESULT_OK);
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +68,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCrime.setTitle(s.toString());
+                crimeDetailsChanged();
             }
 
             @Override
@@ -80,6 +85,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCrime.setSolved(isChecked);
+                crimeDetailsChanged();
             }
         });
 
